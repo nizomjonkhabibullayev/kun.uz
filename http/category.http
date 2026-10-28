@@ -1,0 +1,51 @@
+@baseUrl = http://localhost:8080
+
+### CREATE - yangi kategoriya
+POST {{baseUrl}}/category
+Content-Type: application/json
+
+{
+  "orderNumber": 2,
+  "nameUz": "Siyosat",
+  "nameRu": "Политика",
+  "nameEn": "Politics",
+  "visible": true
+}
+
+> {% client.global.set("categoryId", response.body.id); %}
+
+### CREATE - validatsiya xatosi (400 kutiladi)
+POST {{baseUrl}}/category
+Content-Type: application/json
+
+{
+  "orderNumber": 0,
+  "nameUz": "",
+  "nameRu": "",
+  "nameEn": "",
+  "visible": true
+}
+
+### READ ALL
+GET {{baseUrl}}/category
+
+### READ BY ID
+GET {{baseUrl}}/category/{{categoryId}}
+
+### READ BY ID - mavjud bo'lmagan (404 kutiladi)
+GET {{baseUrl}}/category/999999
+
+### UPDATE
+PUT {{baseUrl}}/category/{{categoryId}}
+Content-Type: application/json
+
+{
+  "orderNumber": 2,
+  "nameUz": "Iqtisodiyot",
+  "nameRu": "Экономика",
+  "nameEn": "Economy",
+  "visible": true
+}
+
+### DELETE - agar unga bog'liq maqola bo'lsa 500 bo'ladi
+DELETE {{baseUrl}}/category/{{categoryId}}

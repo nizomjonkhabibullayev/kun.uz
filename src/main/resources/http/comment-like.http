@@ -1,0 +1,46 @@
+@baseUrl = http://localhost:8080
+# Eslatma: avval profile va comment fayllarini ishga tushiring
+
+### CREATE - izohga like
+POST {{baseUrl}}/comment-like
+Content-Type: application/json
+
+{
+  "profileId": {{profileId}},
+  "commentId": {{commentId}},
+  "status": "Like"
+}
+
+> {% client.global.set("commentLikeId", response.body.id); %}
+
+### CREATE - izohga dislike
+POST {{baseUrl}}/comment-like
+Content-Type: application/json
+
+{
+  "profileId": {{profileId}},
+  "commentId": {{commentId}},
+  "status": "Dislike"
+}
+
+### READ ALL
+GET {{baseUrl}}/comment-like
+
+### READ BY ID
+GET {{baseUrl}}/comment-like/{{commentLikeId}}
+
+### READ BY ID - mavjud bo'lmagan (404 kutiladi)
+GET {{baseUrl}}/comment-like/999999
+
+### UPDATE - like ni dislike ga o'zgartirish
+PUT {{baseUrl}}/comment-like/{{commentLikeId}}
+Content-Type: application/json
+
+{
+  "profileId": {{profileId}},
+  "commentId": {{commentId}},
+  "status": "Dislike"
+}
+
+### DELETE
+DELETE {{baseUrl}}/comment-like/{{commentLikeId}}

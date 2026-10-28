@@ -1,0 +1,59 @@
+@baseUrl = http://localhost:8080
+# Eslatma: avval article va profile fayllarini ishga tushiring
+
+### CREATE - izoh qoldirish
+POST {{baseUrl}}/comment
+Content-Type: application/json
+
+{
+  "content": "Juda foydali maqola!",
+  "profileId": {{profileId}},
+  "articleId": "{{articleId}}",
+  "visible": true
+}
+
+> {% client.global.set("commentId", response.body.id); %}
+
+### CREATE - javobga javob (replyId)
+POST {{baseUrl}}/comment
+Content-Type: application/json
+
+{
+  "content": "Rahmat, javob sifatida yozdim",
+  "profileId": {{profileId}},
+  "articleId": "{{articleId}}",
+  "replyId": {{commentId}},
+  "visible": true
+}
+
+### CREATE - validatsiya xatosi (400 kutiladi)
+POST {{baseUrl}}/comment
+Content-Type: application/json
+
+{
+  "content": "",
+  "replyId": -1
+}
+
+### READ ALL
+GET {{baseUrl}}/comment
+
+### READ BY ID
+GET {{baseUrl}}/comment/{{commentId}}
+
+### READ BY ID - mavjud bo'lmagan (404 kutiladi)
+GET {{baseUrl}}/comment/999999
+
+### UPDATE
+PUT {{baseUrl}}/comment/{{commentId}}
+Content-Type: application/json
+
+{
+  "content": "Tahrirlangan izoh matni",
+  "profileId": {{profileId}},
+  "articleId": "{{articleId}}",
+  "visible": true
+}
+
+### DELETE
+DELETE {{baseUrl}}/comment/{{commentId}}

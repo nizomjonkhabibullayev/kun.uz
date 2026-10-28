@@ -1,0 +1,51 @@
+@baseUrl = http://localhost:8080
+
+### CREATE - yangi maqola turi
+POST {{baseUrl}}/article-type
+Content-Type: application/json
+
+{
+  "orderNumber": 1,
+  "nameUz": "Yangiliklar",
+  "nameRu": "Новости",
+  "nameEn": "News",
+  "visible": true
+}
+
+> {% client.global.set("articleTypeId", response.body.id); %}
+
+### CREATE - validatsiya xatosi (400 kutiladi)
+POST {{baseUrl}}/article-type
+Content-Type: application/json
+
+{
+  "orderNumber": -5,
+  "nameUz": "",
+  "nameRu": "",
+  "nameEn": "",
+  "visible": true
+}
+
+### READ ALL
+GET {{baseUrl}}/article-type
+
+### READ BY ID
+GET {{baseUrl}}/article-type/{{articleTypeId}}
+
+### READ BY ID - mavjud bo'lmagan (404 kutiladi)
+GET {{baseUrl}}/article-type/999999
+
+### UPDATE
+PUT {{baseUrl}}/article-type/{{articleTypeId}}
+Content-Type: application/json
+
+{
+  "orderNumber": 2,
+  "nameUz": "Intervyu",
+  "nameRu": "Интервью",
+  "nameEn": "Interview",
+  "visible": true
+}
+
+### DELETE
+DELETE {{baseUrl}}/article-type/{{articleTypeId}}

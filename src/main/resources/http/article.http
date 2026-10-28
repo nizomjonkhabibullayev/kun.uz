@@ -1,0 +1,61 @@
+@baseUrl = http://localhost:8080
+# Eslatma: avval region, category va profile fayllarini ishga tushiring
+
+### CREATE - yangi maqola
+POST {{baseUrl}}/article
+Content-Type: application/json
+
+{
+  "title": "Yangi maqola sarlavhasi",
+  "description": "Qisqa tavsif",
+  "content": "Maqolaning to'liq matni",
+  "shareCount": 0,
+  "imageId": 1,
+  "regionId": {{regionId}},
+  "categoryId": {{categoryId}},
+  "moderatorId": {{profileId}},
+  "status": "NotPublished",
+  "visible": true,
+  "view": 0
+}
+
+> {% client.global.set("articleId", response.body.id); %}
+
+### CREATE - validatsiya xatosi (400 kutiladi)
+POST {{baseUrl}}/article
+Content-Type: application/json
+
+{
+  "title": "",
+  "description": "",
+  "content": "",
+  "shareCount": -1
+}
+
+### READ ALL
+GET {{baseUrl}}/article
+
+### READ BY ID
+GET {{baseUrl}}/article/{{articleId}}
+
+### READ BY ID - mavjud bo'lmagan (404 kutiladi)
+GET {{baseUrl}}/article/00000000-0000-0000-0000-000000000000
+
+### UPDATE
+PUT {{baseUrl}}/article/{{articleId}}
+Content-Type: application/json
+
+{
+  "title": "Yangilangan sarlavha",
+  "description": "Yangilangan tavsif",
+  "content": "Yangilangan matn",
+  "shareCount": 5,
+  "regionId": {{regionId}},
+  "categoryId": {{categoryId}},
+  "status": "Published",
+  "visible": true,
+  "view": 10
+}
+
+### DELETE
+DELETE {{baseUrl}}/article/{{articleId}}

@@ -1,0 +1,46 @@
+@baseUrl = http://localhost:8080
+# Eslatma: avval article va profile fayllarini ishga tushiring (articleId va profileId kerak)
+
+### CREATE - maqolaga like
+POST {{baseUrl}}/article-like
+Content-Type: application/json
+
+{
+  "profileId": {{profileId}},
+  "articleId": "{{articleId}}",
+  "status": "Like"
+}
+
+> {% client.global.set("articleLikeId", response.body.id); %}
+
+### CREATE - maqolaga dislike
+POST {{baseUrl}}/article-like
+Content-Type: application/json
+
+{
+  "profileId": {{profileId}},
+  "articleId": "{{articleId}}",
+  "status": "Dislike"
+}
+
+### READ ALL
+GET {{baseUrl}}/article-like
+
+### READ BY ID
+GET {{baseUrl}}/article-like/{{articleLikeId}}
+
+### READ BY ID - mavjud bo'lmagan (404 kutiladi)
+GET {{baseUrl}}/article-like/999999
+
+### UPDATE - like ni dislike ga o'zgartirish
+PUT {{baseUrl}}/article-like/{{articleLikeId}}
+Content-Type: application/json
+
+{
+  "profileId": {{profileId}},
+  "articleId": "{{articleId}}",
+  "status": "Dislike"
+}
+
+### DELETE
+DELETE {{baseUrl}}/article-like/{{articleLikeId}}

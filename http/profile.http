@@ -1,0 +1,60 @@
+@baseUrl = http://localhost:8080
+
+### CREATE - yangi profil
+POST {{baseUrl}}/profile
+Content-Type: application/json
+
+{
+  "name": "Aliyev",
+  "surname": "Vali",
+  "email": "vali@example.com",
+  "phone": "+998913234367",
+  "password": "secret223",
+  "status": "Active",
+  "role": "User",
+  "visible": true
+}
+
+> {% client.global.set("profileId", response.body.id); %}
+
+### CREATE - validatsiya xatosi (400 kutiladi)
+POST {{baseUrl}}/profile
+Content-Type: application/json
+
+{
+  "name": "",
+  "surname": "Nizomjonov",
+  "email": "noto'g'ri",
+  "phone": "123",
+  "password": "1",
+  "status": "Active",
+  "role": "User",
+  "visible": true
+}
+
+### READ ALL
+GET {{baseUrl}}/profile
+
+### READ BY ID
+GET {{baseUrl}}/profile/{{profileId}}
+
+### READ BY ID - mavjud bo'lmagan (404 kutiladi)
+GET {{baseUrl}}/profile/999999
+
+### UPDATE - password ham majburiy
+PUT {{baseUrl}}/profile/{{profileId}}
+Content-Type: application/json
+
+{
+  "name": "Ali",
+  "surname": "Karimov",
+  "email": "ali.karimov@example.com",
+  "phone": "+998901234567",
+  "password": "secret12345",
+  "status": "Active",
+  "role": "Admin",
+  "visible": true
+}
+
+### DELETE - agar unga bog'liq maqola bo'lsa 500 bo'ladi
+DELETE {{baseUrl}}/profile/{{profileId}}

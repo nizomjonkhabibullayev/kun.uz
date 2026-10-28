@@ -1,0 +1,49 @@
+@baseUrl = http://localhost:8080
+
+### CREATE - yangi viloyat
+POST {{baseUrl}}/region
+Content-Type: application/json
+
+{
+  "orderNumber": 2,
+  "nameUz": "Toshkent shahri",
+  "nameRu": "Город Ташкент",
+  "nameEn": "Tashkent city",
+  "visible": true
+}
+
+> {% client.global.set("regionId", response.body.id); %}
+
+### CREATE - validatsiya xatosi (400 kutiladi)
+POST {{baseUrl}}/region
+Content-Type: application/json
+
+{
+  "orderNumber": -1,
+  "nameUz": "",
+  "visible": true
+}
+
+### READ ALL
+GET {{baseUrl}}/region
+
+### READ BY ID
+GET {{baseUrl}}/region/{{regionId}}
+
+### READ BY ID - mavjud bo'lmagan (404 kutiladi)
+GET {{baseUrl}}/region/999999
+
+### UPDATE
+PUT {{baseUrl}}/region/{{regionId}}
+Content-Type: application/json
+
+{
+  "orderNumber": 2,
+  "nameUz": "Toshkent viloyati",
+  "nameRu": "Ташкентская область",
+  "nameEn": "Tashkent region",
+  "visible": true
+}
+
+### DELETE - agar unga bog'liq maqola bo'lsa 500 bo'ladi
+DELETE {{baseUrl}}/region/{{regionId}}
